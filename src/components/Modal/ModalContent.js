@@ -5,18 +5,17 @@ const FormContent = styled.form`
   position: relative;
   margin: 10% auto;
   width: 290px;
-  height: 440px;
   background: rgb(252, 252, 252);
   color: #000;
   border: 1px solid #000;
-  border-radius: 5px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  gap: 20px;
   font-weight: 600;
-  padding-bottom: 12px;
+  padding-bottom: 20px;
 `;
+
 const ModalHeader = styled.header`
   background-color: rgba(38, 178, 221);
   color: #fff;
@@ -24,14 +23,11 @@ const ModalHeader = styled.header`
   text-align: center;
   width: 100%;
   padding: 12px 0;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
 `;
 
 const InputField = styled.input`
   padding: 9px;
   border: 1px solid gray;
-  border-radius: 4px;
   font-size: inherit;
 `;
 
@@ -55,6 +51,7 @@ const CloseBtn = styled.button`
   color: #fff;
   cursor: pointer;
 `;
+
 const ModalContent = (props) => {
   const handleChange = (e) => {
     const value = e.target.value;
@@ -66,25 +63,31 @@ const ModalContent = (props) => {
   };
 
   return (
-    <FormContent onSubmit={props.onSubmit}>
+    <FormContent onSubmit={props.onSubmit} autoComplete="off">
       <ModalHeader>
         Add a Book
         <CloseBtn type="button" onClick={props.toggle}>
           <i className="fas fa-times"></i>
         </CloseBtn>
       </ModalHeader>
-      <label>
-        <p>Title:</p>
-        <InputField type="text" name="title" onChange={handleChange} />
-      </label>
-      <label>
-        <p>Author:</p>
-        <InputField type="text" name="author" onChange={handleChange} />
-      </label>
-      <label>
-        <p>Pages:</p>
-        <InputField type="number" name="pages" onChange={handleChange} />
-      </label>
+
+      <InputField
+        type="text"
+        name="title"
+        onChange={handleChange}
+        placeholder="Title"
+        required="required"
+        selected="selected"
+      />
+
+      <InputField
+        type="text"
+        name="author"
+        onChange={handleChange}
+        placeholder="Author"
+        required="required"
+      />
+
       <div>
         <input
           type="radio"
@@ -92,15 +95,17 @@ const ModalContent = (props) => {
           value="Not yet read"
           onChange={handleChange}
           defaultChecked
+          id="notRead"
         />
-        <label>Not yet read</label>
+        <label htmlFor="notRead">Not yet read</label>
         <input
           type="radio"
           name="isRead"
           value="Read"
           onChange={handleChange}
+          id="read"
         />
-        <label>Already read</label>
+        <label htmlFor="read">Already read</label>
       </div>
       <SubmitBtn type="submit">Add to Library</SubmitBtn>
     </FormContent>

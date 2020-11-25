@@ -1,43 +1,75 @@
-import React, { useState } from "react";
-import styled from "styled-components";
 import "./App.css";
-import BookModal from "./components/Modal/AddBookModal";
+import React, { useEffect, useState } from "react";
+import { auth, db } from './firebase'
+import uniqid from "uniqid";
+import Modal from "./components/Modal/Modal";
 import Book from "./components/Book";
 import Library from "./components/Library";
-
-const AddButton = styled.button`
-  color: #fff;
-  background-color: rgba(38, 178, 221, 0.8);
-  border: 1px solid #000;
-  padding: 12px 20px;
-  font-size: 1.6rem;
-  cursor: pointer;
-  border-radius: 4px;
-  z-index: 1;
-`;
+import SignUp from './components/SignUp'
 
 const App = () => {
-  const [modalShow, setModalShow] = useState(false);
-  const toggleModal = () => setModalShow(!modalShow);
+  const [currentUser, setCurrentUser] = useState(null)
+  useEffect(() => {
+    auth.onAuthStateChanged(user => {
+      setCurrentUser(user);
+    })
+  }, [])
 
   const [books, setBooks] = useState([]);
+  useEffect(() => {
+    async function getData() {
+      db.collection("books")
+        .get()
+        .then((querySnapshot) => {
+          const data = querySnapshot.docs.map(
+            (doc) => new Book(doc.data(), doc.id)
+          );
+          setBooks(data)
+        }).catch((err) => console.error(err));
+    }
+    getData();
+  }, []);
+
   const addBook = (values) => {
-    const book = new Book(values);
-    setBooks((prevState) => [...prevState, book]);
+    const book = new Book(values, uniqid());
+    db.collection("books")
+      .doc(book.id)
+      .set({
+        title: book.title,
+        author: book.author,
+        isRead: book.isRead,
+      })
+      .then(() => {
+        setBooks((prevState) => [...prevState, book]);
+      }).catch(err => console.error(err));
   };
 
-  const deleteBook = (book) => {
-    const index = books.indexOf(book);
-    let arr = [...books];
-    arr.splice(index, 1);
-    setBooks(arr);
+  const deleteBook = (bookId) => {
+    db.collection("books")
+      .doc(bookId)
+      .delete()
+      .then(() => {
+        setBooks(books.filter((book) => book.id !== bookId));
+      }).catch(err => console.error(err));
   };
+
+  const updateBook = (book, data) => {
+    book.update(data);
+    db.collection("books")
+      .doc(book.id)
+      .update(data)
+      .then(() => {
+        setBooks([...books]);
+      });
+  };
+
 
   return (
     <div className="App" style={{ textAlign: "center", marginTop: "100px" }}>
-      <AddButton onClick={toggleModal}>Add a Book</AddButton>
-      <BookModal show={modalShow} toggle={toggleModal} addBook={addBook} />
-      <Library books={books} deleteBook={deleteBook} />
+      {!currentUser && <SignUp />}
+      {currentUser && <Modal addBook={addBook} />}
+      {currentUser && <Library books={books} deleteBook={deleteBook} updateBook={updateBook} />}
+      <button onClick={() => auth.signOut()}>Sign out</button>
     </div>
   );
 };
