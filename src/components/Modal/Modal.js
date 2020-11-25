@@ -16,6 +16,14 @@ const AddButton = styled.button`
     background-color: rgb(38, 178, 221);
     box-shadow: 0 0 5px 5px #333;
   }
+
+  @media (max-width: 600px) {
+    position: fixed;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+  }
 `;
 
 const Container = styled.div`

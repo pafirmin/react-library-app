@@ -119,6 +119,11 @@ body {
   background-position: center;
   background-attachment: fixed;
 }
+@media screen and (max-width: 600px) {
+    body {
+        background-size: 220%;
+    }
+}
 ol,
 ul {
   list-style: none;
