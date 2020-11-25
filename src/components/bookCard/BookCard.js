@@ -3,10 +3,11 @@ import styled from "styled-components";
 import IsRead from "./ToggleButton";
 import BookInfo from "./BookInfo";
 import Spinner from "../LoadingSpinner";
+import Header from './BookCardHeader'
 
 const Wrapper = styled.div`
   width: 300px;
-  height: 150px;
+  height: 200px;
   display: flex;
   position: relative;
   flex-direction: column;
@@ -18,33 +19,24 @@ const Wrapper = styled.div`
   margin: 12px;
   padding: 11px;
 `;
-const Title = styled.h3`
-  margin: 0, 8px;
-  font-size: 1.2rem;
-  text-align: center;
-`;
 
-const Author = styled.p`
-  font-style: italic;
-  color: #bbb;
-`;
-
-const DelBtn = styled.button`
+const CardBtn = styled.button`
   background-color: transparent;
   border: none;
   font-size: 1.2rem;
   color: #fff;
   cursor: pointer;
   position: absolute;
-  bottom: 0.5rem;
-  right: 0.5rem;
 `;
 
-const GetInfoBtn = styled.button`
-  background-color: transparent;
-  border: none;
-  color: #fff;
-  cursor: pointer;
+const DelBtn = styled(CardBtn)`
+  bottom: .4rem;
+  right: .3rem;
+`;
+
+const GetInfoBtn = styled(CardBtn)`
+  top: .4rem;
+  right: .3rem;
 `;
 
 const BookCard = (props) => {
@@ -74,16 +66,15 @@ const BookCard = (props) => {
 
   return (
     <Wrapper>
-      <DelBtn onClick={() => props.deleteBook(book.id)}>
+      <DelBtn onClick={() => props.deleteBook(book)}>
         <i className="far fa-trash-alt"></i>
       </DelBtn>
-      <header style={{ height: '50%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-        <Title>{book.title}</Title>
-        <Author>By {book.author}</Author>
-      </header>
-      <Spinner loading={loading} />
+      <Header book={book} />
+      <Spinner loading={loading} size='40' />
       <IsRead text={isReadText} onClick={toggleRead} />
-      <GetInfoBtn onClick={getData}>Info</GetInfoBtn>
+      <GetInfoBtn onClick={getData}>
+        <i className="fas fa-info-circle"></i>
+      </GetInfoBtn>
       <BookInfo
         data={bookData}
         showInfo={showInfo}

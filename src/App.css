@@ -2,7 +2,7 @@
    v2.0 | 20110126
    License: none (public domain)
 */
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 html,
 body,
 div,
@@ -105,18 +105,18 @@ nav,
 section {
   display: block;
 }
- *:focus {
-   outline: 0;
- }
+*:focus {
+  outline: 0;
+}
 
 body {
-    color: #fff;
-    font-family: 'Poppins', sans-serif;
-    background-color: #000;
-    background-image: url("./bg.png");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-attachment: fixed;
+  color: #fff;
+  font-family: "Poppins", sans-serif;
+  background-color: #000;
+  background-image: url("./bg.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
 }
 ol,
 ul {

@@ -11,27 +11,26 @@ export default class Book {
   };
 
   getData = async () => {
-    if (!this.data) {
-      try {
-        const response = await fetch(
-          `https://www.googleapis.com/books/v1/volumes?q=${this.title}+inauthor:${this.author}&key=AIzaSyAYxGSZr2SK0-6TnxBCrDgwllmt1aIu4hU`,
-          { mode: "cors" }
-        );
-        const data = await response.json();
-        const bookData = {
-          title: data.items[0].volumeInfo.title,
-          author: data.items[0].volumeInfo.authors,
-          snippet: data.items[0].searchInfo.textSnippet,
-          img: data.items[0].volumeInfo.imageLinks.smallThumbnail,
-          pages: data.items[0].volumeInfo.pageCount,
-          link: data.items[0].volumeInfo.infoLink,
-        };
-        return bookData;
-      } catch (err) {
-        console.error("Couldn't find that book!");
-      }
+    try {
+      const response = await fetch(
+        `https://www.googleapis.com/books/v1/volumes?q=${this.title}+inauthor:${this.author}&key=AIzaSyAYxGSZr2SK0-6TnxBCrDgwllmt1aIu4hU`,
+        { mode: "cors" }
+      );
+      const data = await response.json();
+      const volume = data.items[0].volumeInfo;
+      const bookData = {
+        title: volume.title,
+        author: volume.authors,
+        img: volume.imageLinks.smallThumbnail,
+        pages: volume.pageCount,
+        link: volume.infoLink,
+        snippet: data.items.find((vol) => vol.searchInfo)
+          .searchInfo.textSnippet,
+      };
+      return bookData;
+    } catch (err) {
+      console.error(err);
     }
-    return this.data;
   };
 
   update = (data) => {

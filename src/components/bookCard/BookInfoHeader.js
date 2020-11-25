@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import styled from "styled-components";
 
 const Title = styled.h3`
@@ -33,7 +33,7 @@ const BookInfoHeader = (props) => {
         <img src={data.img} style={{ height: "100%" }} />
       </a>
     </div>
-  )
-}
+  );
+};
 
-export default BookInfoHeader
+export default BookInfoHeader;

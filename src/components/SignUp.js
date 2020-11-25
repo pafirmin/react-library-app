@@ -1,24 +1,24 @@
-import React from 'react'
-import firebase from 'firebase'
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import React from "react";
+import firebase from "firebase";
+import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 
 const uiConfig = {
-  signInFlow: 'popup',
+  signInFlow: "popup",
   signInOptions: [
     firebase.auth.EmailAuthProvider.PROVIDER_ID,
-    firebase.auth.GoogleAuthProvider.PROVIDER_ID
+    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
   ],
   callbacks: {
-    signInSuccessWithAuthResult: () => false
-  }
-}
+    signInSuccessWithAuthResult: () => false,
+  },
+};
 
 const SignUp = () => {
   return (
     <div>
-      <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()}/>
+      <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
     </div>
-  )
-}
+  );
+};
 
-export default SignUp
+export default SignUp;

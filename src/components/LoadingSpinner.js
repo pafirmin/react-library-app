@@ -2,7 +2,7 @@ import React from "react";
 import Loader from "react-loader-spinner";
 
 const LoadingIndicator = (props) => {
-  const { loading } = props;
+  const { loading, size } = props;
 
   return (
     loading && (
@@ -14,7 +14,7 @@ const LoadingIndicator = (props) => {
           top: "40%",
         }}
       >
-        <Loader type="BallTriangle" color="#fff" height="40" width="40" />
+        <Loader type="BallTriangle" color="#fff" height={size} width={size} />
       </div>
     )
   );

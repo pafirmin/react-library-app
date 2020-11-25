@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Header from './BookInfoHeader'
+import Header from "./BookInfoHeader";
 
 const Wrapper = styled.div`
   display: flex;
@@ -48,7 +48,6 @@ const FooterBtn = styled.button`
   }
 `;
 
-
 const Link = styled.a`
   color: inherit;
   text-decoration: underline;
@@ -56,8 +55,9 @@ const Link = styled.a`
 
 const BookInfo = (props) => {
   const { data } = props;
-  return (
-    props.data && (
+
+  if (data) {
+    return (
       <Wrapper show={props.showInfo}>
         <Header data={data} />
         <Snippet>{data.snippet}</Snippet>
@@ -72,8 +72,14 @@ const BookInfo = (props) => {
           </FooterBtn>
         </Footer>
       </Wrapper>
-    )
-  );
+    );
+  } else {
+    return (
+      <Wrapper>
+        <div>Couldn't find that book</div>
+      </Wrapper>
+    );
+  }
 };
 
 export default BookInfo;
