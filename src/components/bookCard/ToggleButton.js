@@ -16,10 +16,11 @@ const ToggleBtn = styled.button`
 `;
 
 const IsRead = (props) => {
+  const {toggleRead} = props
   return (
     <Wrapper>
       <p style={{ textAlign: "center" }}>{props.text}</p>
-      <ToggleBtn onClick={props.onClick}>(toggle)</ToggleBtn>
+      <ToggleBtn onClick={toggleRead}>(toggle)</ToggleBtn>
     </Wrapper>
   );
 };

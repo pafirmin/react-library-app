@@ -21,6 +21,7 @@ const Wrapper = styled.div`
 
 const Snippet = styled.p`
   margin-top: 6px;
+  height: 50%;
   text-align: left;
   font-size: 0.9rem;
   overflow: auto;
@@ -31,7 +32,7 @@ const Snippet = styled.p`
 const Footer = styled.footer`
   display: flex;
   flex-direction: column;
-  margin-top: auto;
+  margin-top: 5px;
   border-top: 1px solid #fff;
 `;
 

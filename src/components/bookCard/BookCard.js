@@ -23,13 +23,13 @@ const Wrapper = styled.div`
 const CardBtn = styled.button`
   background-color: transparent;
   border: none;
-  font-size: 1.2rem;
   color: #fff;
   cursor: pointer;
   position: absolute;
-`;
-
-const DelBtn = styled(CardBtn)`
+  `;
+  
+  const DelBtn = styled(CardBtn)`
+  font-size: 1.2rem;
   bottom: .4rem;
   right: .3rem;
 `;
@@ -37,17 +37,18 @@ const DelBtn = styled(CardBtn)`
 const GetInfoBtn = styled(CardBtn)`
   top: .4rem;
   right: .3rem;
+  transition: .3s;
+  font-size: 1.4rem;
+  
+  &:hover {
+    scale: 1.2;
+  }
 `;
 
 const BookCard = (props) => {
   const { book } = props;
-  const [read, setRead] = useState(book.isRead);
+  const [read] = useState(book.isRead);
   const isReadText = read ? "Read" : "Not yet read";
-
-  const toggleRead = () => {
-    book.toggleIsRead();
-    setRead(book.isRead);
-  };
 
   const [showInfo, setShowInfo] = useState(false);
   const toggleInfo = () => {
@@ -70,8 +71,9 @@ const BookCard = (props) => {
         <i className="far fa-trash-alt"></i>
       </DelBtn>
       <Header book={book} />
+      {book.pages && <p>{book.pages} pages</p>}
       <Spinner loading={loading} size='40' />
-      <IsRead text={isReadText} onClick={toggleRead} />
+      <IsRead text={isReadText} toggleRead={() => props.toggleRead(book)} />
       <GetInfoBtn onClick={getData}>
         <i className="fas fa-info-circle"></i>
       </GetInfoBtn>

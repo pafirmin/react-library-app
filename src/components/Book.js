@@ -1,8 +1,9 @@
 export default class Book {
-  constructor(form, id) {
-    this.author = form.author;
-    this.title = form.title;
-    this.isRead = form.isRead === "Read" ? true : false;
+  constructor(data, id) {
+    this.author = data.author;
+    this.title = data.title;
+    this.isRead = data.isRead;
+    this.pages = data.pages || null
     this.id = id;
   }
 
@@ -36,5 +37,6 @@ export default class Book {
   update = (data) => {
     this.author = data.author;
     this.title = data.title;
+    this.pages = data.pages;
   };
 }

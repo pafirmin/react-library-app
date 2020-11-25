@@ -8,8 +8,21 @@ const Header = styled.header`
   background-color: rgba(23,23,23,.8);
   width: 100%;
   height: 60px;
-  justify-content: flex-end;
+  justify-content: center;
+  align-items: center;
+`
 
+const MainTitle = styled.h1`
+  font-size: 2rem;
+  font-family: 'Montserrat', sans-serif;
+`
+
+const UserDiv = styled.div`
+  position: absolute;
+  right: 40px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
 `
 
 const SignOutBtn = styled.button`
@@ -31,12 +44,13 @@ const MainHeader = (props) => {
   const { user, auth } = props
   return (
     <Header>
+      <MainTitle style={{flex: '1'}}>Library Cards</MainTitle>
       { user &&
-        <div style={{ display: 'flex', gap: '12px', marginRight: '40px', alignItems: 'center' }}>
-        <ProfileImg src={user.photoURL}/>
+        <UserDiv>
+          <ProfileImg src={user.photoURL}/>
           <span>{user.email}</span>
           <SignOutBtn onClick={() => auth.signOut()}>Log Out</SignOutBtn>
-        </div>
+        </UserDiv>
       }
     </Header>
   )

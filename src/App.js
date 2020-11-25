@@ -60,19 +60,34 @@ const App = () => {
       .doc(book.id)
       .delete()
       .then(() => {
-        setBooks(books.filter((doc) => doc.id !== book.id));
+        setBooks(books.filter((obj) => obj.id !== book.id));
       })
       .catch((err) => console.error(err));
   };
+
+  const toggleRead = (book) => {
+    book.toggleIsRead();
+    db.collection(`users/${auth.currentUser.uid}/books/`)
+      .doc(book.id)
+      .update({isRead: book.isRead})
+      .then(() => {
+        setBooks([...books]);
+      })
+      .catch((err) => console.log(err));
+  }
 
   const updateBook = (book, data) => {
     book.update(data);
     db.collection(`users/${auth.currentUser.uid}/books/`)
       .doc(book.id)
-      .update(data)
+      .update({
+        title: data.title, 
+        author: data.author, 
+        pages: data.pages})
       .then(() => {
         setBooks([...books]);
-      });
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -86,6 +101,7 @@ const App = () => {
           books={books}
           deleteBook={deleteBook}
           updateBook={updateBook}
+          toggleRead={toggleRead}
         />
       )}
     </div>

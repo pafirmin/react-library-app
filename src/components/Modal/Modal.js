@@ -5,7 +5,7 @@ import FormContent from "./ModalContent";
 const AddButton = styled.button`
   color: #fff;
   background-color: rgba(38, 178, 221, 0.8);
-  border: 1px solid #000;
+  border: none;
   padding: 12px 20px;
   font-size: 1.6rem;
   cursor: pointer;
@@ -14,6 +14,7 @@ const AddButton = styled.button`
 
   &:hover {
     background-color: rgb(38, 178, 221);
+    box-shadow: 0 0 5px 5px #333;
   }
 `;
 
