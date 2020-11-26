@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const Title = styled.h3`
-  font-size: 1.2rem;
+  font-size: ${(props) => (props.length > 40 ? "1rem" : "1.2rem")};
   text-align: left;
 `;
 
@@ -23,7 +23,7 @@ const BookInfoHeader = (props) => {
           justifyContent: "space-between",
         }}
       >
-        <Title>{data.title}</Title>
+        <Title length={data.title.length}>{data.title}</Title>
         <Author>by {data.author}</Author>
       </div>
       <a
@@ -32,7 +32,11 @@ const BookInfoHeader = (props) => {
         target="_blank"
         rel="noreferrer"
       >
-        <img src={data.img} style={{ height: "100%" }} alt={`${data.title} cover`}/>
+        <img
+          src={data.img}
+          style={{ height: "100%" }}
+          alt={`${data.title} cover`}
+        />
       </a>
     </div>
   );

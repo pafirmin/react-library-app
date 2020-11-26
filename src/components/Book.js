@@ -20,17 +20,25 @@ export default class Book {
         { mode: "cors" }
       );
       const data = await response.json();
-      const volume = data.items[0].volumeInfo;
-      const bookData = {
-        title: volume.title,
-        author: volume.authors,
-        img: volume.imageLinks.smallThumbnail,
-        pages: volume.pageCount,
-        link: volume.infoLink,
-        snippet: data.items.find((vol) => vol.searchInfo).searchInfo
-          .textSnippet,
-      };
-      return bookData;
+      const validEntries = data.items
+        .filter(
+          (vol) =>
+            vol.volumeInfo.pageCount &&
+            vol.volumeInfo.imageLinks &&
+            vol.searchInfo
+        )
+        .map((vol) => {
+          return {
+            title: vol.volumeInfo.title,
+            author: vol.volumeInfo.authors.join(", "),
+            img: vol.volumeInfo.imageLinks.smallThumbnail,
+            pages: vol.volumeInfo.pageCount,
+            link: vol.volumeInfo.infoLink,
+            snippet: vol.searchInfo.textSnippet,
+          };
+        });
+
+      return validEntries;
     } catch (err) {
       console.error(err);
     }

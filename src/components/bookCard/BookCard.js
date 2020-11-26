@@ -64,16 +64,16 @@ const BookCard = (props) => {
   const getData = async () => {
     setLoading(true);
     const data = await book.getData();
-    toggleInfo();
     setBookData(data);
+    toggleInfo();
     setLoading(false);
   };
 
-  const syncData = () => {
-    props.updateBook(book, bookData);
+  const syncData = (data) => {
+    props.updateBook(book, data);
     toggleInfo();
   };
-  
+
   return (
     <Wrapper>
       <GetInfoBtn onClick={getData}>

@@ -1,7 +1,6 @@
 import React from "react";
 import BookCard from "./bookCard/BookCard";
 import styled from "styled-components";
-import uniqid from "uniqid";
 
 const Container = styled.div`
   justify-content: center;

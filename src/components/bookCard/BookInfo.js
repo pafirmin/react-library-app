@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Header from "./BookInfoHeader";
-import _ from 'lodash'
+import _ from "lodash";
 
 const Wrapper = styled.div`
   display: flex;
@@ -44,6 +44,7 @@ const FooterBtn = styled.button`
   font: inherit;
   color: inherit;
   cursor: pointer;
+  color: #ccc;
 
   &:hover {
     text-decoration: underline;
@@ -57,33 +58,48 @@ const Link = styled.a`
 
 const BookInfo = (props) => {
   const { data } = props;
+  const [searchIndex, setSearchIndex] = useState(0);
+
+  const nextResult = () => {
+    const newIndex = searchIndex + 1 > data.length - 1 ? 0 : searchIndex + 1;
+    setSearchIndex(newIndex);
+  };
+
+  const prevResult = () => {
+    const newIndex = searchIndex - 1 < 0 ? data.length - 1 : searchIndex - 1;
+    setSearchIndex(newIndex);
+  };
 
   if (data) {
     return (
       <Wrapper show={props.showInfo}>
-        <Header data={data} />
-        <Snippet>{_.unescape(data.snippet)}</Snippet>
+        <Header data={data[searchIndex]} />
+        <Snippet>{_.unescape(data[searchIndex].snippet)}</Snippet>
         <Footer>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <p>Pages: {data.pages}</p>
-            <Link href={data.link} target="_blank">
+            <p>Pages: {data[searchIndex].pages}</p>
+            <Link href={data[searchIndex].link} target="_blank">
               Google Books
             </Link>
           </div>
-          <FooterBtn onClick={props.syncData}>sync data</FooterBtn>
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <FooterBtn onClick={prevResult}>
+              <i className="fas fa-angle-left"></i> prev
+            </FooterBtn>
+            <FooterBtn onClick={() => props.syncData(data[searchIndex])}>
+              sync data
+            </FooterBtn>
+            <FooterBtn onClick={nextResult}>
+              next <i className="fas fa-angle-right"></i>{" "}
+            </FooterBtn>
+          </div>
           <FooterBtn onClick={props.hideInfo}>
             <i className="fas fa-caret-up"></i>
           </FooterBtn>
         </Footer>
       </Wrapper>
     );
-  } else {
-    return (
-      <Wrapper>
-        <div>Couldn't find that book</div>
-      </Wrapper>
-    );
-  }
+  } 
 };
 
 export default BookInfo;

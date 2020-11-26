@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import _ from 'lodash'
+import _ from "lodash";
 
 const Header = styled.header`
   height: 50%;
@@ -11,7 +11,7 @@ const Header = styled.header`
 
 const Title = styled.h3`
   margin: 0 18px;
-  font-size: ${(props) => props.length > 40 ?  '1rem' : '1.2rem'};
+  font-size: ${(props) => (props.length > 40 ? "1rem" : "1.2rem")};
   text-align: center;
 `;
 
@@ -20,11 +20,10 @@ const Author = styled.p`
   color: #bbb;
 `;
 
-
 const BookCardHeader = (props) => {
   const { book } = props;
-  const title = _.truncate(book.title, { 'length': 65, 'separator': ' ' })
-  
+  const title = _.truncate(book.title, { length: 65, separator: " " });
+
   return (
     <Header>
       <Title length={book.title.length}>{title}</Title>
