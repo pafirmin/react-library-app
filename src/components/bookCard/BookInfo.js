@@ -1,22 +1,23 @@
 import React from "react";
 import styled from "styled-components";
 import Header from "./BookInfoHeader";
+import _ from 'lodash'
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
   padding: ${(props) => (props.show ? "8px 14px 0px 14px" : "0")};
+  height: ${(props) => (props.show ? "100%" : "0")};
   position: absolute;
   top: 0;
   left: 0;
   background-color: #000;
   width: 100%;
-  height: ${(props) => (props.show ? "300px" : "0")};
   transition: height, 0.3s;
   overflow: hidden;
   text-align: left;
-  z-index: 2;
+  z-index: 1;
 `;
 
 const Snippet = styled.p`
@@ -61,13 +62,15 @@ const BookInfo = (props) => {
     return (
       <Wrapper show={props.showInfo}>
         <Header data={data} />
-        <Snippet>{data.snippet}</Snippet>
+        <Snippet>{_.unescape(data.snippet)}</Snippet>
         <Footer>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <p>Pages: {data.pages}</p>
-            <Link href={data.link}>Google Books</Link>
+            <Link href={data.link} target="_blank">
+              Google Books
+            </Link>
           </div>
-          <FooterBtn onClick={props.updateBook}>sync data</FooterBtn>
+          <FooterBtn onClick={props.syncData}>sync data</FooterBtn>
           <FooterBtn onClick={props.hideInfo}>
             <i className="fas fa-caret-up"></i>
           </FooterBtn>

@@ -20,7 +20,7 @@ const Library = (props) => {
           deleteBook={props.deleteBook}
           updateBook={props.updateBook}
           toggleRead={props.toggleRead}
-          key={uniqid()}
+          key={book.id}
         />
       ))}
     </Container>

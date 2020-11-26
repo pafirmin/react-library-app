@@ -5,7 +5,7 @@ const FormContent = styled.form`
   position: relative;
   margin: 10% auto;
   width: 290px;
-  background: rgb(252, 252, 252);
+  background: #fff;
   color: #000;
   border: 1px solid #000;
   display: flex;
@@ -14,6 +14,11 @@ const FormContent = styled.form`
   gap: 20px;
   font-weight: 600;
   padding-bottom: 20px;
+
+  @media screen and (max-width: 600px) {
+    width: 100%;
+    margin: 0;
+  }
 `;
 
 const ModalHeader = styled.header`
@@ -23,12 +28,19 @@ const ModalHeader = styled.header`
   text-align: center;
   width: 100%;
   padding: 12px 0;
+
+  @media screen and (max-width: 600px) {
+    background-color: #fff;
+    color: #000;
+  }
 `;
 
 const InputField = styled.input`
   padding: 9px;
-  border: 1px solid gray;
-  font-size: inherit;
+  font-size: 1.2rem;
+  border: none;
+  border-bottom: 1px solid #555;
+  width: 80%;
 `;
 
 const SubmitBtn = styled.button`
@@ -45,20 +57,22 @@ const CloseBtn = styled.button`
   background-color: transparent;
   border: none;
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 4px;
+  right: 4px;
   font-size: 1.3em;
   color: #fff;
   cursor: pointer;
+
+  @media screen and (max-width: 600px) {
+    color: #bbb;
+  }
 `;
 
 const ModalContent = (props) => {
   const handleChange = (e) => {
-    const value = e.target.value;
-    const name = e.target.name;
     props.setValues((prevState) => ({
       ...prevState,
-      [name]: value,
+      [e.target.name]: e.target.value,
     }));
   };
 
@@ -77,7 +91,6 @@ const ModalContent = (props) => {
         onChange={handleChange}
         placeholder="Title"
         required="required"
-        selected="selected"
       />
 
       <InputField

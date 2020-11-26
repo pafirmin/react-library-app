@@ -14,18 +14,19 @@ const App = () => {
   const [loading, setLoading] = useState(false)
   const [books, setBooks] = useState([]);
 
+  // Set current user on login
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
     });
   }, []);
 
+  // Fetch book data from Firestore
   useEffect(() => {
     async function getData() {
       if (currentUser) {
         setLoading(true);
-        db
-          .collection(`users/${auth.currentUser.uid}/books/`)
+        db.collection(`users/${auth.currentUser.uid}/books/`)
           .get()
           .then((querySnapshot) => {
             const data = querySnapshot.docs.map(
@@ -40,6 +41,7 @@ const App = () => {
     getData();
   }, [currentUser]);
 
+  // Add book to user database
   const addBook = (values) => {
     const book = new Book(values, uniqid());
     db.collection(`users/${auth.currentUser.uid}/books/`)
@@ -55,6 +57,7 @@ const App = () => {
       .catch((err) => console.error(err));
   };
 
+  // Remove book from user database
   const deleteBook = (book) => {
     db.collection(`users/${auth.currentUser.uid}/books/`)
       .doc(book.id)
@@ -65,6 +68,7 @@ const App = () => {
       .catch((err) => console.error(err));
   };
 
+  // Toggle the 'read' status of a book
   const toggleRead = (book) => {
     book.toggleIsRead();
     db.collection(`users/${auth.currentUser.uid}/books/`)
@@ -76,6 +80,7 @@ const App = () => {
       .catch((err) => console.log(err));
   }
 
+  // Update book with data from Google Books request
   const updateBook = (book, data) => {
     book.update(data);
     db.collection(`users/${auth.currentUser.uid}/books/`)
@@ -83,7 +88,9 @@ const App = () => {
       .update({
         title: data.title, 
         author: data.author, 
-        pages: data.pages})
+        pages: data.pages,
+        img: data.img,
+        link: data.link})
       .then(() => {
         setBooks([...books]);
       })

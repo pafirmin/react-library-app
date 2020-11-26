@@ -4,7 +4,6 @@ import styled from "styled-components";
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding-top: 30px;
 `;
 
 const ToggleBtn = styled.button`
@@ -16,11 +15,13 @@ const ToggleBtn = styled.button`
 `;
 
 const IsRead = (props) => {
-  const {toggleRead} = props
+  const { toggleRead } = props;
   return (
     <Wrapper>
-      <p style={{ textAlign: "center" }}>{props.text}</p>
-      <ToggleBtn onClick={toggleRead}>(toggle)</ToggleBtn>
+      <span style={{ textAlign: "center" }}>
+        {props.text}
+        <ToggleBtn onClick={toggleRead}>(toggle)</ToggleBtn>
+      </span>
     </Wrapper>
   );
 };

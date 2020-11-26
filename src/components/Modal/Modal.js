@@ -4,13 +4,13 @@ import FormContent from "./ModalContent";
 
 const AddButton = styled.button`
   color: #fff;
-  background-color: rgba(38, 178, 221, 0.8);
+  background-color: rgba(38, 178, 221, 0.9);
   border: none;
   padding: 12px 20px;
   font-size: 1.6rem;
   cursor: pointer;
   border-radius: 4px;
-  z-index: 1;
+  z-index: 3;
 
   &:hover {
     background-color: rgb(38, 178, 221);
@@ -20,8 +20,8 @@ const AddButton = styled.button`
   @media (max-width: 600px) {
     position: fixed;
     bottom: 20px;
-    left: 0;
-    right: 0;
+    left: 50%;
+    transform: translateX(-50%);
     margin: 0 auto;
   }
 `;

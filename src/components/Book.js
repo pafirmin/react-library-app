@@ -3,7 +3,9 @@ export default class Book {
     this.author = data.author;
     this.title = data.title;
     this.isRead = data.isRead;
-    this.pages = data.pages || null
+    this.pages = data.pages || null;
+    this.img = data.img || null;
+    this.link = data.link || null;
     this.id = id;
   }
 
@@ -25,8 +27,8 @@ export default class Book {
         img: volume.imageLinks.smallThumbnail,
         pages: volume.pageCount,
         link: volume.infoLink,
-        snippet: data.items.find((vol) => vol.searchInfo)
-          .searchInfo.textSnippet,
+        snippet: data.items.find((vol) => vol.searchInfo).searchInfo
+          .textSnippet,
       };
       return bookData;
     } catch (err) {
@@ -35,8 +37,6 @@ export default class Book {
   };
 
   update = (data) => {
-    this.author = data.author;
-    this.title = data.title;
-    this.pages = data.pages;
+    Object.assign(this, data);
   };
 }

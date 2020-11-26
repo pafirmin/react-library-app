@@ -29,8 +29,10 @@ const BookInfoHeader = (props) => {
       <a
         href={data.link}
         style={{ marginLeft: "auto", width: "20%", textAlign: "right" }}
+        target="_blank"
+        rel="noreferrer"
       >
-        <img src={data.img} style={{ height: "100%" }} />
+        <img src={data.img} style={{ height: "100%" }} alt={`${data.title} cover`}/>
       </a>
     </div>
   );
