@@ -64,9 +64,9 @@ const BookCard = (props) => {
   const getData = async () => {
     setLoading(true);
     const data = await book.getData();
+    setLoading(false);
     setBookData(data);
     toggleInfo();
-    setLoading(false);
   };
 
   const syncData = (data) => {

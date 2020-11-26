@@ -99,7 +99,11 @@ const BookInfo = (props) => {
         </Footer>
       </Wrapper>
     );
-  } 
+  } else {
+    return (
+      <Wrapper><div>Couldn't find book</div></Wrapper>
+    )
+  }
 };
 
 export default BookInfo;
