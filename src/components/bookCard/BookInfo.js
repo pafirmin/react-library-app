@@ -101,8 +101,10 @@ const BookInfo = (props) => {
     );
   } else {
     return (
-      <Wrapper><div>Couldn't find book</div></Wrapper>
-    )
+      <Wrapper>
+        <div>Couldn't find book</div>
+      </Wrapper>
+    );
   }
 };
 

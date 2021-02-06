@@ -2,17 +2,21 @@ import "./App.css";
 import React, { useEffect, useState } from "react";
 import { auth, db } from "./firebase";
 import uniqid from "uniqid";
-import MainHeader from './components/MainHeader'
+import MainHeader from "./components/MainHeader";
 import Modal from "./components/Modal/Modal";
 import Book from "./components/Book";
 import Library from "./components/Library";
 import SignUp from "./components/SignUp";
-import Spinner from './components/LoadingSpinner'
+import Spinner from "./components/LoadingSpinner";
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState(null);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const [books, setBooks] = useState([]);
+
+  const userBooks = () => {
+    return db.collection(`users/${auth.currentUser.uid}/books/`);
+  };
 
   // Set current user on login
   useEffect(() => {
@@ -26,7 +30,7 @@ const App = () => {
     async function getData() {
       if (currentUser) {
         setLoading(true);
-        db.collection(`users/${auth.currentUser.uid}/books/`)
+        userBooks()
           .get()
           .then((querySnapshot) => {
             const data = querySnapshot.docs.map(
@@ -36,7 +40,7 @@ const App = () => {
             setLoading(false);
           })
           .catch((err) => console.error(err));
-        }
+      }
     }
     getData();
   }, [currentUser]);
@@ -44,7 +48,7 @@ const App = () => {
   // Add book to user database
   const addBook = (values) => {
     const book = new Book(values, uniqid());
-    db.collection(`users/${auth.currentUser.uid}/books/`)
+    userBooks()
       .doc(book.id)
       .set({
         title: book.title,
@@ -59,7 +63,7 @@ const App = () => {
 
   // Remove book from user database
   const deleteBook = (book) => {
-    db.collection(`users/${auth.currentUser.uid}/books/`)
+    userBooks()
       .doc(book.id)
       .delete()
       .then(() => {
@@ -71,26 +75,27 @@ const App = () => {
   // Toggle the 'read' status of a book
   const toggleRead = (book) => {
     book.toggleIsRead();
-    db.collection(`users/${auth.currentUser.uid}/books/`)
+    userBooks()
       .doc(book.id)
-      .update({isRead: book.isRead})
+      .update({ isRead: book.isRead })
       .then(() => {
         setBooks([...books]);
       })
       .catch((err) => console.log(err));
-  }
+  };
 
   // Update book with data from Google Books request
   const updateBook = (book, data) => {
     book.update(data);
-    db.collection(`users/${auth.currentUser.uid}/books/`)
+    userBooks()
       .doc(book.id)
       .update({
-        title: data.title, 
-        author: data.author, 
+        title: data.title,
+        author: data.author,
         pages: data.pages,
         img: data.img,
-        link: data.link})
+        link: data.link,
+      })
       .then(() => {
         setBooks([...books]);
       })
@@ -100,17 +105,15 @@ const App = () => {
   return (
     <div className="App" style={{ textAlign: "center", marginTop: "100px" }}>
       <MainHeader user={currentUser} auth={auth} />
-      <Spinner loading={loading} size='100'/>
+      <Spinner loading={loading} size="100" />
       {!currentUser && <SignUp />}
       {currentUser && <Modal addBook={addBook} />}
-      {currentUser && (
-        <Library
-          books={books}
-          deleteBook={deleteBook}
-          updateBook={updateBook}
-          toggleRead={toggleRead}
-        />
-      )}
+      {currentUser && <Library
+        books={books}
+        deleteBook={deleteBook}
+        updateBook={updateBook}
+        toggleRead={toggleRead}
+      />}
     </div>
   );
 };

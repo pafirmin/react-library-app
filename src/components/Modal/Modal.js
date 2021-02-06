@@ -4,17 +4,14 @@ import FormContent from "./ModalContent";
 
 const AddButton = styled.button`
   color: #fff;
-  background-color: rgba(38, 178, 221, 0.9);
+  background: linear-gradient(rgba(130, 221, 249, 0.9), rgba(38, 178, 221, 0.9));
   border: none;
   padding: 12px 20px;
   font-size: 1.6rem;
   cursor: pointer;
-  border-radius: 4px;
-  z-index: 3;
 
   &:hover {
     background-color: rgb(38, 178, 221);
-    box-shadow: 0 0 5px 5px #333;
   }
 
   @media (max-width: 600px) {
